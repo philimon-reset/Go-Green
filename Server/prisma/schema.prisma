@@ -26,9 +26,9 @@ model Bounty {
   id           Int      @id @default(autoincrement())
   sponsor      User     @relation("Sponsor", fields: [sponsorId], references: [id], onDelete: Cascade)
   sponsorId    Int
-  tree         Tree     @relation(fields: [treeId], references: [id])
+  tree         Tree     @relation(fields: [treeId], references: [id], onDelete: Cascade)
   treeId       Int
-  planter      User?    @relation("Planter", fields: [planterId], references: [id], onDelete: SetNull)
+  planter      User?    @relation("Planter", fields: [planterId], references: [id])
   planterId    Int?
   Appovered    Boolean  @default(false)
   Claims       Claims[]
@@ -46,7 +46,7 @@ model Bounty {
 model Tree {
   id          Int      @id @default(autoincrement())
   name        String
-  price       Int
+  price       Float
   pic         String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
