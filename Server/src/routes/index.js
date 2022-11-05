@@ -3,6 +3,7 @@ const userRouter = require("./users");
 const treeRouter = require("./tree");
 const bountyRouter = require("./bounty");
 const cityRouter = require("./city");
+const fileRouter = require("./files");
 
 const router = express.Router();
 
@@ -11,5 +12,6 @@ router.use('/users', userRouter);
 router.use('/tree',treeRouter);
 router.use('/bounty',bountyRouter);
 router.use('/city',cityRouter);
+router.use('/file',fileRouter);
 
 module.exports = router;

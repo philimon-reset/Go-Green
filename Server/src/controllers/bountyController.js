@@ -3,7 +3,22 @@ const {HttpError, ValidationError} = require("../Util/error");
 class bountyController {
 	static async getall(req, res, next) {
 		try {
-			const bounties = await prisma.bounty.findMany({});
+			let bounties;
+			if (req.isAuthenticated()) {
+				bounties = await prisma.bounty.findMany({
+					where: {
+						Appovered: false,
+						sponsor: {
+							NOT: {
+								id: req.user.id
+							}
+						}
+					}
+				});
+			}
+			else {
+				bounties = await prisma.bounty.findMany({});
+			}
 			return res.json({data: bounties})
 		} catch (e) {
 			next(e)
@@ -33,7 +48,11 @@ class bountyController {
 							id: req.user.id
 						}
 					},
-					city_id: city_id === undefined ? undefined : Number(city_id),
+					City: {
+						connect: {
+							id: city_id === undefined ? undefined : Number(city_id),
+						}
+					},
 					Price: Number(price),
 					tree: {
 						connect: {
@@ -63,6 +82,26 @@ class bountyController {
 			if (!added) {
 				throw new HttpError(401, "Add Claim failed");
 			}
+			return res.json({data: added});
+		} catch (e) {
+			next(e)
+		}
+	}
+	static async removeClaim(req, res, next) {
+		try {
+			const {bountyId} = req.params;
+			const removed = await prisma.claims.delete({
+				where: {
+					userId_bountyId: {
+						bountyId: Number(bountyId),
+						userId: req.user.id,
+					}
+				}
+			})
+			if (!removed) {
+				throw new HttpError(401, "remove Claim failed");
+			}
+			return res.json({message: "Claim removed"});
 		} catch (e) {
 			next(e)
 		}
