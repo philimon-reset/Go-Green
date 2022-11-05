@@ -1,14 +1,14 @@
 import { Outlet } from "react-router-dom";
-import { Link, Flex } from "@chakra-ui/react";
+import { Link, Box } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 import "./style.css";
 
 export default function MainLayout() {
   return (
     <>
-      <Flex px={1} py={1} overflow="hidden" mb={"7vh"}>
+      <Box px={1} py={1} overflow="hidden" mb={"7vh"}>
         <Outlet />
-      </Flex>
+      </Box>
 
       <div className="nav-container">
         <Link as={RouterLink} to="#">
