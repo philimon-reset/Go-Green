@@ -1,6 +1,68 @@
 import "./style.css"
 
 const Sponsor = () => {
+
+  
+  const showSuggestions = (e) => {
+    
+    let suggestionBox = document.getElementById("suggestions")
+    let inputBox = document.getElementById("tree-input")
+
+
+    let inputData = e.target.value
+    let emptyArray = []
+    let suggestions = [
+      "Channel",
+      "CodingLab",
+      "CodingNepal",
+      "YouTube",
+      "YouTuber",
+      "YouTube Channel",
+      "Blogger",
+      "Bollywood",
+      "Vlogger",
+      "Vechiles",
+      "Facebook",
+      "Freelancer",
+      "Facebook Page",
+      "Designer",
+      "Developer",
+      "Web Designer",
+      "Web Developer",
+      "Login Form in HTML & CSS",
+      "How to learn HTML & CSS",
+      "How to learn JavaScript",
+      "How to became Freelancer",
+      "How to became Web Designer",
+      "How to start Gaming Channel",
+      "How to start YouTube Channel",
+      "What does HTML stands for?",
+      "What does CSS stands for?",
+  ];
+
+    if(inputData){
+      emptyArray = suggestions.filter((data) => {
+        return data.toLocaleLowerCase().startsWith(inputData.toLocaleLowerCase())
+        
+      })
+  
+
+      emptyArray = emptyArray.map((data) => {
+        return data = '<li>' + data + '<li>'
+      })
+
+      console.log(emptyArray)
+    }
+
+  }
+
+ 
+
+  const toggleSuggestions = () => {
+    let suggestions = document.getElementById('suggestions')
+    suggestions.classList.toggle('open')
+  }
+
   return (
     <>
       <div class="section">
@@ -9,15 +71,26 @@ const Sponsor = () => {
 
           <div className="question">
             <label htmlFor="trees"><b>Tree Type</b></label>
-            <select name="trees" id="trees">
-              <option value="black">The cool one</option>
-              <option value="others">Others</option>
-            </select>
+            <div className="drop-down-search">
+              <div className="search-container">
+                <input type="text" name="tree-search" id="tree-input" onKeyUp={(e) => {showSuggestions(e)}} onClick={() => {toggleSuggestions()}} placeholder="Search tree species" />
+                <svg className="search-svg"  xmlns="http://www.w3.org/2000/svg" height="38" width="40"><path d="m38.65 40.1-12-12q-1.55 1.35-3.625 2.025Q20.95 30.8 19 30.8q-5.1 0-8.575-3.45-3.475-3.45-3.475-8.5t3.45-8.5q3.45-3.45 8.5-3.45 5 0 8.5 3.45t3.5 8.5q0 2.1-.7 4.1-.7 2-2.05 3.55L40.3 38.55q.35.35.35.8 0 .45-.4.8-.35.3-.8.3-.45 0-.8-.35Zm-19.7-11.5q4.15 0 6.975-2.8 2.825-2.8 2.825-6.95 0-4.2-2.825-7t-6.975-2.8q-4.2 0-7 2.8t-2.8 7q0 4.15 2.8 6.95t7 2.8Z"/></svg>
+                <div id="suggestions">
+                  <options className="suggestion-items">1</options>
+                  <options className="suggestion-items">2</options>
+                  <options className="suggestion-items">3</options>
+                  <options className="suggestion-items">4</options>
+                  <options className="suggestion-items">5</options>
+                </div>
+              </div>
+            </div>
+          
+
           </div>
 
           <div className="question">
             <label htmlFor="bounty"><b>Bounty</b></label>
-            <span><input type="number" id="bounty" name="bounty" min="5" placeholder="Minimum Pric: $5" /></span>
+            <span><input type="number" id="bounty" name="bounty" min="5" placeholder="Minimum Price: $5" /></span>
           </div>
 
           <div className="question">
@@ -28,7 +101,10 @@ const Sponsor = () => {
             </select>
           </div>
 
+
+          <div className="question">
           <button className="submit-btn" type="submit">Submit</button>
+          </div>
           
         </form>
 

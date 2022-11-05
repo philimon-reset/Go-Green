@@ -46,7 +46,8 @@ svg {
   width: 100vw;
   color: var(--primary);
   background-color: white;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1); */
+  border-bottom: 1px solid grey;
   height: 7vh;
   z-index: 1;
 }
