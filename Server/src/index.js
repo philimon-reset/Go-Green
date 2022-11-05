@@ -155,6 +155,6 @@ app.get('/feed', async (req, res) => {
   res.json(posts)
 })
 
-const server = app.listen(3000, () =>
+const server = app.listen(PORT, () =>
   console.log(`Server started with ${PORT}`)
 )
