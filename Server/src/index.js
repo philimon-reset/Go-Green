@@ -136,7 +136,7 @@ app.get('/feed', async (req, res) => {
           { title: { contains: searchString } },
           { content: { contains: searchString } },
         ],
-      }y
+      }
     : {}
 
   const posts = await prisma.post.findMany({
