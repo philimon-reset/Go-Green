@@ -2,7 +2,15 @@ const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 
-const userData = []
+const userData = [
+  {
+    name: "Dev",
+    email: "Dev@email.com",
+    password: "test",
+    wallet: 500,
+    PayPal: "testing"
+  }
+]
 
 async function main() {
   // await prisma.user.deleteMany();
