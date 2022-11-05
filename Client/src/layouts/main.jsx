@@ -1,22 +1,54 @@
 import { Outlet } from "react-router-dom";
-import { Link, Box, Stack, Heading } from "@chakra-ui/react";
-import { Link as RouterLink } from "react-router-dom";
+import {
+  Link,
+  Box,
+  Stack,
+  Heading,
+  Flex,
+  useColorMode,
+  useDisclosure,
+  Button,
+  Menu,
+  MenuButton,
+  Avatar,
+  MenuList,
+  MenuDivider,
+  Center,
+  MenuItem,
+} from "@chakra-ui/react";
+
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { Link as RouterLink, redirect } from "react-router-dom";
 import "./style.css";
 
 import Lottie from "lottie-react";
 import treeAniim from "../assets/tree_anim.json";
+import { useLocation } from "react-router-dom";
 
 export default function MainLayout() {
+  const { colorMode, toggleColorMode } = useColorMode();
+
+  let location = useLocation();
+
+  const isActive = (location, currentLocation) => {
+    console.log(location.pathname);
+    console.log(currentLocation);
+    if (location.pathname == currentLocation) {
+      return true;
+    }
+    return false;
+  };
+
+  const user = {
+    name: "abebe",
+    wallet: 20,
+  };
+
   return (
     <>
       <div className="top-container">
-        <Stack
-          direction={"row"}
-          justifyContent={"space-between"}
-          align={"center"}
-          padding={1}
-        >
-          <Stack direction={"row"} align={"center"}>
+        <Flex justifyContent={"space-between"} align={"center"} padding={1}>
+          <Stack direction={"row"} align={"center"} pr={{ base: 5, sm: 10 }}>
             <div className="gif">
               <Lottie
                 autoplay
@@ -31,10 +63,58 @@ export default function MainLayout() {
                 Forrest
               </Heading>
             </div>
-
           </Stack>
-          <Box pr={10}>Profile</Box>
-        </Stack>
+          <Flex alignItems={"center"} pr={{ base: 5, sm: 10 }}>
+            <Stack direction={"row"} spacing={7}>
+              <Button onClick={toggleColorMode} mt={1}>
+                {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
+              </Button>
+
+              <Menu>
+                <MenuButton
+                  as={Button}
+                  rounded={"full"}
+                  variant={"link"}
+                  cursor={"pointer"}
+                  minW={0}
+                  _hover={{
+                    border: "1px",
+                    borderColor: "green.500",
+                  }}
+                >
+                  <Avatar
+                    size={"sm"}
+                    src={`https://avatars.dicebear.com/api/human/${user.name}.svg`}
+                  />
+                </MenuButton>
+                <MenuList alignItems={"center"}>
+                  <br />
+                  <Center>
+                    <Avatar
+                      size={"2xl"}
+                      src={`https://avatars.dicebear.com/api/human/${user.name}.svg`}
+                    />
+                  </Center>
+                  <br />
+                  <Center color="black">
+                    <p>{user.name}</p>
+                  </Center>
+                  <br />
+                  <Flex justifyContent={"space-around"} color="black">
+                    <p>🌲 : 25</p>
+                    <p>💰: 150$</p>
+                    <p>⭐: 4.5</p>
+                  </Flex>
+                  <MenuDivider />
+                  <MenuItem>
+                    <Link to="#">Account Settings</Link>
+                  </MenuItem>
+                  <MenuItem>Logout</MenuItem>
+                </MenuList>
+              </Menu>
+            </Stack>
+          </Flex>
+        </Flex>
       </div>
 
       <Box px={1} pt={7} overflow="hidden" mb={"11vh"} mt={"5vh"} zIndex={-1}>
@@ -42,8 +122,25 @@ export default function MainLayout() {
       </Box>
 
       <div className="nav-container">
+        <Link as={RouterLink} to="/">
+          <div
+            className={`btn-container ${
+              isActive(location, "/") && "active-nav-menu"
+            }`}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" height="40" width="45">
+              <path d="M11.55 38.45h8.05v-12h8.8v12h8.05v-18.7L24 10.35l-12.45 9.4ZM10 40V19L24 8.4 38 19v21H26.85V28h-5.7v12Zm14-15.6Z" />
+            </svg>
+            <div className="label">Home</div>
+          </div>
+        </Link>
+
         <Link as={RouterLink} to="/sponsor">
-          <div className="btn-container">
+          <div
+            className={`btn-container ${
+              isActive(location, "/sponsor") && "active-nav-menu"
+            }`}
+          >
             <svg
               className="nav-btn"
               xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +154,11 @@ export default function MainLayout() {
         </Link>
 
         <Link as={RouterLink} to="/contracts">
-          <div className="btn-container">
+          <div
+            className={`btn-container ${
+              isActive(location, "/contracts") && "active-nav-menu"
+            }`}
+          >
             <svg
               className="nav-btn"
               xmlns="http://www.w3.org/2000/svg"
@@ -71,7 +172,11 @@ export default function MainLayout() {
         </Link>
 
         <Link as={RouterLink} to="/plant">
-          <div className="btn-container">
+          <div
+            className={`btn-container ${
+              isActive(location, "/plant") && "active-nav-menu"
+            }`}
+          >
             <svg
               className="nav-btn"
               xmlns="http://www.w3.org/2000/svg"

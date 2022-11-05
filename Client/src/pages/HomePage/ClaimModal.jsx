@@ -29,10 +29,10 @@ export default function ClaimModal({ modalOpen, modalClose, BountyInfo }) {
         </ModalBody>
         <ModalFooter>
           <Button colorScheme="green" mr={3}>
-            Claim !
+            Claim
           </Button>
           <Button variant="ghost" onClick={modalClose}>
-            Secondary Action
+            Close
           </Button>
         </ModalFooter>
       </ModalContent>

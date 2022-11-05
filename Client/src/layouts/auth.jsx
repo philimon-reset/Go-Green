@@ -19,7 +19,7 @@ export default function AuthLayout() {
         style={{ height: "200px", width: "300px" }}
       />
       <Heading color={"green.500"} mt={-9} mb={{ md: 3.5 }}>
-        `Forrest
+        Forrest
       </Heading>
       <Outlet />
     </Flex>

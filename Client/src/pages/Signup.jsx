@@ -15,6 +15,7 @@ import {
   Divider,
   useColorModeValue,
   Link,
+  Select,
 } from "@chakra-ui/react";
 
 import { Link as ReactLink } from "react-router-dom";
@@ -23,6 +24,20 @@ import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
 export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
+
+  let _cities = [
+    "Bremen",
+    "Munich",
+    "Dusseldorf",
+    "Frankfurt",
+    "Berlin",
+    "Munster",
+  ];
+  let cities = [];
+  for (let i = 0; i < _cities.length; i++) {
+    cities.push(<option value={i}>{_cities[i]}</option>);
+  }
+
   return (
     <Flex
       align={"center"}
@@ -50,15 +65,15 @@ export default function Signup() {
           <Stack spacing={4}>
             <HStack>
               <Box>
-                <FormControl id="firstName" isRequired>
-                  <FormLabel>First Name</FormLabel>
+                <FormControl id="ame" isRequired>
+                  <FormLabel>Name</FormLabel>
                   <Input type="text" />
                 </FormControl>
               </Box>
               <Box>
-                <FormControl id="lastName">
-                  <FormLabel>Last Name</FormLabel>
-                  <Input type="text" />
+                <FormControl id="location" isRequired>
+                  <FormLabel>City</FormLabel>
+                  <Select placeholder="Select your city">{cities}</Select>
                 </FormControl>
               </Box>
             </HStack>
