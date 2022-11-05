@@ -23,28 +23,6 @@ class userController {
 			next(e)
 		}
 	}
-	static async register(req, res, next) {
-		try {
-			const {email, password, pic, name, PayPal, wallet } = req.body;
-			const hashed = await hashedpassword(password);
-			const created = await prisma.user.create({
-				data: {
-					email,
-					name,
-					password: hashed,
-					wallet: wallet === undefined ? undefined : Number(wallet),
-					PayPal,
-					pic,
-				}
-			})
-			if (!created) {
-				throw new HttpError(422, "User Register failed");
-			}
-			return res.json({data: { created }, message: "User registered"});
-		} catch (e) {
-			next(e)
-		}
-	}
 }
 
 module.exports = userController;
