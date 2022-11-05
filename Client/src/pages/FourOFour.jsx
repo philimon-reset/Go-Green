@@ -6,7 +6,7 @@ export default function FourOFour() {
     <>
       <h1>404 Not Found !</h1>
       <div>
-        Go Back
+        Go Back{" "}
         <Link as={RouterLink} to="/">
           Home
         </Link>
