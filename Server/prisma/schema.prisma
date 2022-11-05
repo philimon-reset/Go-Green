@@ -15,8 +15,8 @@ model User {
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  wallet    Int
-  PayPal    String
+  wallet    Int      @default(500)
+  PayPal    String?
   Sponsor_B Bounty[] @relation("Sponsor")
   Planter_B Bounty[] @relation("Planter")
   Claims    Bounty[]
@@ -38,7 +38,6 @@ model Bounty {
   Success      Boolean  @default(false)
   Before_pic   String?
   After_pic    String?
-  radius       Int?
   Price        Int
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
