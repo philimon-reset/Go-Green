@@ -11,7 +11,7 @@ export default function MainLayout() {
       </Flex>
 
       <div className="nav-container">
-        <Link as={RouterLink} to="#">
+        <Link as={RouterLink} to="/sponsor">
           <div className="btn-container">
             <svg
               className="nav-btn"
@@ -25,7 +25,7 @@ export default function MainLayout() {
           </div>
         </Link>
 
-        <Link as={RouterLink} to="#">
+        <Link as={RouterLink} to="/contracts">
           <div className="btn-container">
             <svg
               className="nav-btn"
@@ -40,7 +40,7 @@ export default function MainLayout() {
           </div>
         </Link>
 
-        <Link as={RouterLink} to="#">
+        <Link as={RouterLink} to="/plant">
           <div className="btn-container">
             <svg
               className="nav-btn"
