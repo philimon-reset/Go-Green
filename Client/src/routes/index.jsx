@@ -33,7 +33,7 @@ const router = createBrowserRouter([
       {
         path: 'plant',
         element: <PlantPage />
-      }
+      },
 
     ],
   },
