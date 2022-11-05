@@ -17,16 +17,21 @@ export default function MainLayout() {
           padding={1}
         >
           <Stack direction={"row"} align={"center"}>
-            <Lottie
-              autoplay
-              loop
-              animationData={treeAniim}
-              style={{ height: "60px", width: "60px" }}
-              pb={2}
-            />
-            <Heading size={"lg"} color={"green.500"}>
-              `Forrest
-            </Heading>
+            <div className="gif">
+              <Lottie
+                autoplay
+                loop
+                animationData={treeAniim}
+                style={{ height: "60px", width: "60px" }}
+                pb={2}
+              />
+            </div>
+            <div className="nav-title">
+              <Heading size={"lg"} color={"green.500"}>
+                Forrest
+              </Heading>
+            </div>
+
           </Stack>
           <Box pr={10}>Profile</Box>
         </Stack>

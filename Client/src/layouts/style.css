@@ -50,3 +50,14 @@ svg {
   height: 7vh;
   z-index: 1;
 }
+
+
+.gif{
+    position: absolute;
+    top: -1;
+    left: 0;
+}
+
+.nav-title{
+    margin-left: 3em !important;
+}
