@@ -1,0 +1,71 @@
+:root {
+  --primary: #00a028;
+  color: var(--primary);
+  height: max-content;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.section{
+    display: flex;
+    flex-direction: column;
+}
+select {
+  width: 15em;
+  height: 3em;
+  background-color: white;
+  border-bottom: 1px solid rgb(231, 231, 231);
+  color: var(--primary);
+}
+
+.question {
+  display: flex;
+  flex-direction: column;
+}
+
+#bounty {
+  border-bottom: 1px solid rgb(231, 231, 231);
+  width: 15em;
+  height: 3em;
+  outline: none;
+}
+
+.submit-btn {
+  background-color: white;
+
+  font-size: large;
+
+  text-transform: uppercase;
+  color: var(--primary);
+  font-weight: bold;
+  padding: 7px 15px;
+  border-radius: 5px;
+  margin-right: 3em;
+  outline: none;
+  position: relative;
+  align-self: flex-end;
+ 
+}
+
+
+.form {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 7vh;
+  height: 70vh;
+
+  
+  gap: 1em;
+}
+
+.title {
+  font-size: xx-large;
+  font-weight: 900;
+  margin-left:  1rem;
+  
+}
+
+
