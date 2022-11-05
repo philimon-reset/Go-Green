@@ -17,9 +17,8 @@
     width: 100%;
     justify-content: space-around;
     color: lightgrey;
-    background-color: rgb(0, 0, 0);
-    box-shadow: 0px 10px 5px white;
-    height: 9vh;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    height: 11vh;
     
     
 }
@@ -27,35 +26,21 @@
 .btn-container{
     margin: 5px;
     width: 4em;
-    position: relative;
+    display: flex;
+    flex-direction: column;
 }
-
 
 
 
 svg{
     fill: var(--primary);
-    margin: 3px ;
-}
-
-.title{
-    color: #202d21;
-    font-size:small
-}
-
-
-.btn-container:hover{
-    transform: scale(1.2);
+    align-self: center;
     
 }
 
-.hover-card{
-    
-    color: white;
-    position: absolute;
-    top: 1;
-    left: 0;
-    right: 0;
-    text-align: center;
-        
+
+.label{ 
+    color: var(--primary);
+    font-size:small;
+    text-align: center;     
 }
