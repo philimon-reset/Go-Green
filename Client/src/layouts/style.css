@@ -1,0 +1,50 @@
+*{
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+ 
+ --primary: #629d71;
+ --secondary: #ffffff;
+ --grey: #202d21;
+  
+}
+
+.nav-container{
+    
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    justify-content: space-around;
+    color: lightgrey;
+    
+}
+
+.btn-container{
+    margin: 5px;
+    width: 4em;
+}
+
+
+
+
+svg{
+    fill: var(--primary);
+}
+
+.title{
+    color: #202d21;
+    font-size:small
+}
+
+
+.btn-container:hover{
+    transform: scale(1.2);
+    
+}
+
+.hover-card{
+    
+    color: black;
+    
+}
