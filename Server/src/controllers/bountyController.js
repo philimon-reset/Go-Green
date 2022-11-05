@@ -51,6 +51,22 @@ class bountyController {
 			next(e);
 		}
 	}
+	static async addClaim(req, res, next) {
+		try {
+			const {bountyId} = req.params;
+			const added = await prisma.claims.create({
+				data: {
+					bountyId: Number(bountyId),
+					userId: req.user.id,
+				}
+			})
+			if (!added) {
+				throw new HttpError(401, "Add Claim failed");
+			}
+		} catch (e) {
+			next(e)
+		}
+	}
 }
 
 module.exports = bountyController;

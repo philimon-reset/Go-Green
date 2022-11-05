@@ -38,7 +38,7 @@ model Bounty {
   Success      Boolean  @default(false)
   Before_pic   String?
   After_pic    String?
-  Price        Int
+  Price        Float
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }

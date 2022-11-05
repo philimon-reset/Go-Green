@@ -17,7 +17,10 @@
     "express-session": "^1.17.3",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.20",
-    "redis": "^4.4.0"
+    "redis": "^4.4.0",
+    "bcrypt": "^5.1.0",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0"
   },
   "devDependencies": {
     "prisma": "4.5.0"

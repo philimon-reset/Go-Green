@@ -5,7 +5,8 @@ const {checknotauthenticated} = require("../controllers/middleware/checkauth");
 
 const userRouter = express.Router();
 
-userRouter.route('/').get(userController.getall).post(checknotauthenticated, AuthController.signup);
+userRouter.route('/').get(userController.getall);
+userRouter.route('/register').post(checknotauthenticated, AuthController.signup);
 userRouter.route('/login').post(checknotauthenticated, AuthController.login);
 userRouter.route('/:userId').get(userController.getbyid);
 
