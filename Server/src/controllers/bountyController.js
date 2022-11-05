@@ -189,7 +189,7 @@ class bountyController {
 			
 			const bounty = await prisma.bounty.findUnique({
 				where: {
-					id: Number(bountyId)
+					id: bountyId === undefined ? undefined : Number(bountyId)
 				}
 			});
 			if (req.user.id == bounty.sponsorId){
@@ -199,9 +199,15 @@ class bountyController {
 					},
 					data: {
 						Appovered: true,
-						planterId: planterId
+						planterId: planterId === undefined ? undefined : Number(planterId)
 					},
 				});
+				await prisma.claims.deleteMany({
+					where: {
+						bountyId: bounty.id,
+						userId: planterId === undefined ? undefined : Number(planterId)
+					}
+				})
 				return res.status(200).json({
 					"message" : "approved successfully"
 				});

@@ -36,6 +36,7 @@ model Bounty {
   city_id      Int?
   location_end String?
   Success      Boolean  @default(false)
+  Report       Boolean  @default(false)
   Before_pic   String?
   After_pic    String?
   Price        Float
