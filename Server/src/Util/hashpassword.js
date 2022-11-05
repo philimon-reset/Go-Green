@@ -2,7 +2,8 @@ const bcrypt = require("bcrypt");
 
 
 const hashedpassword = async (password) => {
-	return await bcrypt.hash(password, 10);
+	const hash = await bcrypt.hash(password, 10);
+	return hash;
 }
 
 const unhashpassword = async ( password, hashedpassword ) => {

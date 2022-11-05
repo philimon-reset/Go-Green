@@ -1,6 +1,6 @@
 const prisma = require("../Storageengine/initPrisma");
 const { HttpError } = require("../Util/error");
-const {hashedpassword, unhashpassword, hashedpassword } = require("../Util/hashpassword");
+const {hashedpassword } = require("../Util/hashpassword");
 class userController {
 	static async getall(req, res, next) {
 		try {
@@ -25,14 +25,14 @@ class userController {
 	}
 	static async register(req, res, next) {
 		try {
-			const {email, password, pic, name, PayPal } = req.body;
-			const hashed = hashedpassword(password);
+			const {email, password, pic, name, PayPal, wallet } = req.body;
+			const hashed = await hashedpassword(password);
 			const created = await prisma.user.create({
 				data: {
 					email,
 					name,
 					password: hashed,
-					wallet,
+					wallet: wallet === undefined ? undefined : Number(wallet),
 					PayPal,
 					pic,
 				}

@@ -25,21 +25,27 @@ class bountyController {
 
 	static async createBounty(req, res, next) {
 		try {
-			const { userId } = req.params;
-			
-			const user = await prisma.user.findUnique({
-				where: {
-					id: Number(userId),
-				}
-			})
-			if (!user) {
-				throw new HttpError(404, "Sponsor not found");
-			}
+			const {price, treeId, city_id } = req.body;
 			const created = await prisma.bounty.create({
 				data: {
-					sponsor: user
+					sponsor: {
+						connect: {
+							id: req.user.id
+						}
+					},
+					city_id: city_id === undefined ? undefined : Number(city_id),
+					Price: Number(price),
+					tree: {
+						connect: {
+							id: treeId === undefined ? undefined : Number(treeId)
+						}
+					}
+
 				}
 			})
+			if (!created) {
+				throw new HttpError(401, "Creation failed");
+			}
 			return res.json({message: "Bounty Created", data: { created }});
 		} catch (e) {
 			next(e);

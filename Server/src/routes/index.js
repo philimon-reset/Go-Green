@@ -8,7 +8,7 @@ const router = express.Router();
 // 	res.json({data: 'Hello World!'})
 //       })
 
-router.use('/users', userRouter);
+router.use('/user', userRouter);
 router.use('/tree',treeRouter);
 router.use('/bounty',bountyRouter);
 

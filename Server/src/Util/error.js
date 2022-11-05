@@ -1,5 +1,3 @@
-const { extend } = require("joi");
-
 class ValidationError extends Error {
   constructor(code = 400, message) {
     super(message);

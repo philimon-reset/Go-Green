@@ -1,7 +1,7 @@
 const passport = require('passport');
 const Strategy = require('passport-local');
 const prisma = require('../Storageengine/initPrisma');
-const bcrypt = require('bcrypt');
+const {hashedpassword, unhashpassword} = require("./hashpassword")
 
 // serialize user
 passport.serializeUser((id, done) => {
@@ -16,7 +16,6 @@ passport.deserializeUser(async (_id, done) => {
     select: {
       id: true,
       name: true,
-      userName: true,
       email: true,
       createdAt: true,
     },
@@ -35,22 +34,24 @@ passport.use(
       passReqToCallback: true,
     },
     async (req, email, password, done) => {
-      const { name, userName } = req.body;
-      let _hash = await bcrypt.hash(password, 10);
-
-      let user = {
-        email,
-        name,
-        userName,
-        password: _hash,
-      };
 
       try {
-        let record = await prisma.user.create({
-          data: user,
-        });
-
-        return done(null, record.id);
+        const {pic, name, PayPal, wallet } = req.body;
+        const hashed = await hashedpassword(password);
+        const created = await prisma.user.create({
+          data: {
+            email,
+            name,
+            password: hashed,
+            wallet: wallet === undefined ? undefined : Number(wallet),
+            PayPal,
+            pic,
+          }
+        })
+        if (!created) {
+          throw new HttpError(422, "User Register failed");
+        }
+        return done(null, created.id);
       } catch (error) {
         done(error, false, {
           message: 'An error occured',
@@ -82,7 +83,7 @@ passport.use(
           });
         }
 
-        const validPass = await bcrypt.compare(password, user.password);
+        const validPass = await unhashpassword(password, user.password);
 
         if (validPass) {
           return done(null, user.id);

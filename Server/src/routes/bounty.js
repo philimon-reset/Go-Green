@@ -1,11 +1,11 @@
 const express = require("express");
 const bountyController= require("../controllers/bountyController");
+const {checkauthenticated} = require("../controllers/middleware/checkauth");
 
 const bountyRouter = express.Router();
 
-bountyRouter.route('/').get(bountyController.getall);
+bountyRouter.route('/').get(bountyController.getall).post(checkauthenticated, bountyController.createBounty);
 bountyRouter.route('/:bountyId').get(bountyController.getbyid);
-// bountyRouter.route('users/:userId')
 // bountyRouter.route('users/:userId/claim_bountyId')
 // bountyRouter.route('users/:userId/claim_bounty/:bountyId')
 // bountyRouter.route('users/:userId/approve_bounty/:approvedUserId')

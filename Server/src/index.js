@@ -1,12 +1,17 @@
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config()
 }
-const router = require("./routes/index");
 const express = require('express')
 const cors = require("cors");
 const morgan = require("morgan");
+const express_session = require('express-session');
+const passport = require('passport');
+const RedisStore = require('connect-redis');
+const { createClient } = require('redis');
 
 const PORT = process.env.PORT ?? 3000;
+require("./Util/auth");
+const router = require("./routes/index");
 const app = express()
 
 
@@ -14,7 +19,34 @@ app.use(express.json())
 app.use(morgan("dev"));
 app.use(express.urlencoded({extended: false}))
 
-app.use(router);
+// ===> session & AUTH
+let redisClient = createClient({
+  legacyMode: true,
+});
+redisClient.connect().catch(console.error);
+
+let sessionStore = new (RedisStore(express_session))({
+  client: redisClient,
+});
+
+app.use(
+  express_session({
+    resave: false,
+    saveUninitialized: false,
+    secret: process.env.SESSION_SECRET ?? 'HARDKEY123',
+    store: sessionStore,
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+// ===> CORS
+app.use(cors({ origin: '*' }));
+// ====================================================
+
+app.use('/api',router);
+
 
 app.use((err, req, res, next) => {
   console.log(err);
@@ -30,6 +62,6 @@ app.use((err, req, res, next) => {
     .json({ err, message: err?.message, method: err.method });
 });
 
-const server = app.listen(3000, () =>
+const server = app.listen(PORT, () =>
   console.log(`Server started with ${PORT}`)
 )
