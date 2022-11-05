@@ -1,76 +1,70 @@
 import {
-    Box,
-    Center,
-    useColorModeValue,
-    Heading,
-    Text,
-    Stack,
-    Image,
-} from '@chakra-ui/react';
+  Box,
+  Center,
+  useColorModeValue,
+  Heading,
+  Text,
+  Stack,
+  Image,
+  Button,
+} from "@chakra-ui/react";
 
-const IMAGE =
-    'https://unsplash.com/photos/XBxQZLNBM0Q';
+import IMAGE from "../../assets/tree.jpg";
 
-export default function ProductSimple() {
-    return (
-        <Center py={12}>
-            <Box
-                role={'group'}
-                p={6}
-                maxW={'330px'}
-                w={'full'}
-                bg={useColorModeValue('white', 'gray.800')}
-                boxShadow={'2xl'}
-                rounded={'lg'}
-                pos={'relative'}
-                zIndex={1}>
-                <Box
-                    rounded={'lg'}
-                    mt={-12}
-                    pos={'relative'}
-                    height={'230px'}
-                    _after={{
-                        transition: 'all .3s ease',
-                        content: '""',
-                        w: 'full',
-                        h: 'full',
-                        pos: 'absolute',
-                        top: 5,
-                        left: 0,
-                        backgroundImage: `url(${IMAGE})`,
-                        filter: 'blur(15px)',
-                        zIndex: -1,
-                    }}
-                    _groupHover={{
-                        _after: {
-                            filter: 'blur(20px)',
-                        },
-                    }}>
-                    <Image
-                        rounded={'lg'}
-                        height={230}
-                        width={282}
-                        objectFit={'cover'}
-                        src={IMAGE}
-                    />
-                </Box>
-                <Stack pt={10} align={'center'}>
-                    <Text color={'gray.500'} fontSize={'sm'} textTransform={'uppercase'}>
-                        Brand
-                    </Text>
-                    <Heading fontSize={'2xl'} fontFamily={'body'} fontWeight={500}>
-                        Nice Chair, pink
-                    </Heading>
-                    <Stack direction={'row'} align={'center'}>
-                        <Text fontWeight={800} fontSize={'xl'}>
-                            $57
-                        </Text>
-                        <Text textDecoration={'line-through'} color={'gray.600'}>
-                            $199
-                        </Text>
-                    </Stack>
-                </Stack>
-            </Box>
-        </Center>
-    );
+export default function Card() {
+  return (
+    <Center py={{ base: 1, sm: 4 }}>
+      <Box
+        role={"group"}
+        maxW={{ base: "160px", sm: "500px" }}
+        maxH={{ base: "260px", sm: "500px" }}
+        w={"full"}
+        bg={useColorModeValue("white", "gray.800")}
+        boxShadow={"2xl"}
+        rounded={"lg"}
+      >
+        <Image
+          roundedTop={"lg"}
+          height={{ base: 100, sm: 200 }}
+          width={"100%"}
+          objectFit={"cover"}
+          src={IMAGE}
+          style={{
+            clipPath: "polygon(0 0,100% 0, 100% 85%, 0 100%)",
+          }}
+        />
+
+        <Stack p={3}>
+          <Text color={"gray.500"} fontSize={"sm"} textTransform={"uppercase"}>
+            Bremen, Germany
+          </Text>
+          <Heading
+            fontSize={{ base: "xl", sm: "2xl" }}
+            fontFamily={"body"}
+            fontWeight={500}
+          >
+            Acacia Tree
+          </Heading>
+          <Stack
+            direction={"row"}
+            align={"center"}
+            justifyContent={"space-between"}
+          >
+            <Text fontWeight={600} fontSize={"xl"} color={"green.500"}>
+              $57
+            </Text>
+            <Button
+              bg={"green.700"}
+              color={"white"}
+              _hover={{
+                bg: "green.500",
+              }}
+            >
+              Claim
+            </Button>
+          </Stack>
+        </Stack>
+      </Box>
+    </Center>
+  );
 }
