@@ -1,5 +1,5 @@
 const prisma = require("../Storageengine/initPrisma")
-
+const {HttpError, ValidationError} = require("../Util/error");
 class bountyController {
 	static async getall(req, res, next) {
 		try {
@@ -20,6 +20,35 @@ class bountyController {
 			return res.json({data: bounty})
 		} catch (e) {
 			next(e)
+		}
+	}
+
+	static async createBounty(req, res, next) {
+		try {
+			const {price, treeId, city_id } = req.body;
+			const created = await prisma.bounty.create({
+				data: {
+					sponsor: {
+						connect: {
+							id: req.user.id
+						}
+					},
+					city_id: city_id === undefined ? undefined : Number(city_id),
+					Price: Number(price),
+					tree: {
+						connect: {
+							id: treeId === undefined ? undefined : Number(treeId)
+						}
+					}
+
+				}
+			})
+			if (!created) {
+				throw new HttpError(401, "Creation failed");
+			}
+			return res.json({message: "Bounty Created", data: { created }});
+		} catch (e) {
+			next(e);
 		}
 	}
 }
