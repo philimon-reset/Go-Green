@@ -3,6 +3,9 @@ import { Link, Box, Stack, Heading } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
 import "./style.css";
 
+import Lottie from "lottie-react";
+import treeAniim from "../assets/tree_anim.json";
+
 export default function MainLayout() {
   return (
     <>
@@ -11,11 +14,21 @@ export default function MainLayout() {
           direction={"row"}
           justifyContent={"space-between"}
           align={"center"}
-          minWidth="100%"
           padding={1}
         >
-          <Heading size={"xl"}>Hi User! </Heading>
-          <Box>Profile</Box>
+          <Stack direction={"row"} align={"center"}>
+            <Lottie
+              autoplay
+              loop
+              animationData={treeAniim}
+              style={{ height: "60px", width: "60px" }}
+              pb={2}
+            />
+            <Heading size={"lg"} color={"green.500"}>
+              `Forrest
+            </Heading>
+          </Stack>
+          <Box pr={10}>Profile</Box>
         </Stack>
       </div>
 

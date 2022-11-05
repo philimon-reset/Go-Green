@@ -1,7 +1,8 @@
-import { Box, Flex, useColorModeValue } from "@chakra-ui/react";
+import { Heading, Flex, useColorModeValue } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 
-import { Player } from "@lottiefiles/react-lottie-player";
+import Lottie from "lottie-react";
+import treeAniim from "../assets/tree_anim.json";
 
 export default function AuthLayout() {
   return (
@@ -9,17 +10,18 @@ export default function AuthLayout() {
       minH={"100vh"}
       align={"center"}
       justify={"space-evenly"}
-      bg={useColorModeValue("gray.50", "gray.800")}
+      flexDirection={"column"}
     >
-      <Box>
-        <Player
-          autoplay
-          loop
-          src="https://assets7.lottiefiles.com/packages/lf20_i9mxcD.json"
-          style={{ height: "200px", width: "300px" }}
-        />
-        <Outlet />
-      </Box>
+      <Lottie
+        autoplay
+        loop
+        animationData={treeAniim}
+        style={{ height: "200px", width: "300px" }}
+      />
+      <Heading color={"green.500"} mt={-9} mb={{ md: 3.5 }}>
+        `Forrest
+      </Heading>
+      <Outlet />
     </Flex>
   );
 }

@@ -41,10 +41,10 @@ export default function Signup() {
           rounded={"lg"}
           bg={useColorModeValue("white", "gray.700")}
           boxShadow={"lg"}
-          p={8}
+          p={6}
         >
-          <Heading fontSize={"4xl"}>
-            <Center>Sign Up</Center>
+          <Heading fontSize={"xl"}>
+            <Center>Create a new account</Center>
           </Heading>
           <Divider my={4} />
           <Stack spacing={4}>

@@ -9,26 +9,29 @@ import {
   Button,
 } from "@chakra-ui/react";
 
-import IMAGE from "../../assets/tree.jpg";
-
-export default function Card() {
+export default function Card({ BountyInfo, openModal }) {
   return (
     <Center py={{ base: 1, sm: 4 }}>
       <Box
         role={"group"}
-        maxW={{ base: "160px", sm: "500px" }}
+        maxW={{ base: "160px", sm: "200px" }}
         maxH={{ base: "260px", sm: "500px" }}
         w={"full"}
         bg={useColorModeValue("white", "gray.800")}
-        boxShadow={"2xl"}
+        border={"1px"}
+        borderColor="green.100"
         rounded={"lg"}
+        _hover={{
+          cursor: "pointer",
+        }}
+        onClick={openModal}
       >
         <Image
           roundedTop={"lg"}
           height={{ base: 100, sm: 200 }}
           width={"100%"}
           objectFit={"cover"}
-          src={IMAGE}
+          src={BountyInfo.image}
           style={{
             clipPath: "polygon(0 0,100% 0, 100% 85%, 0 100%)",
           }}
@@ -36,14 +39,14 @@ export default function Card() {
 
         <Stack p={3}>
           <Text color={"gray.500"} fontSize={"sm"} textTransform={"uppercase"}>
-            Bremen, Germany
+            {BountyInfo.location}
           </Text>
           <Heading
             fontSize={{ base: "xl", sm: "2xl" }}
             fontFamily={"body"}
             fontWeight={500}
           >
-            Acacia Tree
+            {BountyInfo.treeName}
           </Heading>
           <Stack
             direction={"row"}
@@ -51,7 +54,7 @@ export default function Card() {
             justifyContent={"space-between"}
           >
             <Text fontWeight={600} fontSize={"xl"} color={"green.500"}>
-              $57
+              {BountyInfo.price}
             </Text>
             <Button
               bg={"green.700"}
