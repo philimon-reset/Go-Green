@@ -205,7 +205,7 @@ class bountyController {
 				await prisma.claims.deleteMany({
 					where: {
 						bountyId: bounty.id,
-						userId: planterId === undefined ? undefined : Number(planterId)
+						// userId: planterId === undefined ? undefined : Number(planterId)
 					}
 				})
 				return res.status(200).json({

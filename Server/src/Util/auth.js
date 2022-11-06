@@ -18,6 +18,9 @@ passport.deserializeUser(async (_id, done) => {
       name: true,
       email: true,
       createdAt: true,
+      wallet: true,
+      PayPal: true,
+      pic: true
     },
   });
 
@@ -35,8 +38,9 @@ passport.use(
     },
     async (req, email, password, done) => {
 
+      const {pic, name, PayPal, wallet } = req.body;
+
       try {
-        const {pic, name, PayPal, wallet } = req.body;
         const hashed = await hashedpassword(password);
         const created = await prisma.user.create({
           data: {
@@ -47,12 +51,13 @@ passport.use(
             PayPal,
             pic,
           }
-        })
+        });
         if (!created) {
           throw new HttpError(422, "User Register failed");
         }
         return done(null, created.id);
       } catch (error) {
+        console.log(name, email, password, wallet, PayPal, pic)
         done(error, false, {
           message: 'An error occured',
         });

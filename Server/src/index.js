@@ -42,7 +42,10 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // ===> CORS
-app.use(cors({ origin: '*' }));
+app.use(cors({
+  origin: '*',
+  credentials: true
+}));
 // ====================================================
 
 app.use('/api',router);

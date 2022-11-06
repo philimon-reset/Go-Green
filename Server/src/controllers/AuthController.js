@@ -66,6 +66,13 @@ class AuthController {
   static async me(req, res, next) {
     return res.json(req.user);
   }
+
+  static async me(req, res, next) {
+    if (req.isAuthenticated()) {
+      return res.json({message: "Authenticated", data: req.user})
+    }
+    return res.status(403).json({message: "Not Authenticated"})
+  }
 }
 
 module.exports = AuthController;
