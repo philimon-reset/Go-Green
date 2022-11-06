@@ -14,11 +14,18 @@ class bountyController {
 								id: req.user.id
 							}
 						}
+					},
+					include: {
+						tree: true
 					}
 				});
 			}
 			else {
-				bounties = await prisma.bounty.findMany({});
+				bounties = await prisma.bounty.findMany({
+					include: {
+						tree: true
+					}
+				});
 			}
 			return res.json({data: bounties})
 		} catch (e) {
