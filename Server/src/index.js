@@ -1,23 +1,22 @@
 if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config()
+  require("dotenv").config();
 }
-const express = require('express')
+const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
-const express_session = require('express-session');
-const passport = require('passport');
-const RedisStore = require('connect-redis');
-const { createClient } = require('redis');
+const express_session = require("express-session");
+const passport = require("passport");
+const RedisStore = require("connect-redis");
+const { createClient } = require("redis");
 
 const PORT = process.env.PORT ?? 3000;
 require("./Util/auth");
+const app = express();
 const router = require("./routes/index");
-const app = express()
 
-
-app.use(express.json())
+app.use(express.json());
 app.use(morgan("dev"));
-app.use(express.urlencoded({extended: false}))
+app.use(express.urlencoded({ extended: false }));
 
 // ===> session & AUTH
 let redisClient = createClient({
@@ -33,7 +32,7 @@ app.use(
   express_session({
     resave: false,
     saveUninitialized: false,
-    secret: process.env.SESSION_SECRET ?? 'HARDKEY123',
+    secret: process.env.SESSION_SECRET ?? "HARDKEY123",
     store: sessionStore,
   })
 );
@@ -42,14 +41,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // ===> CORS
-app.use(cors({
-  origin: '*',
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
 // ====================================================
 
-app.use('/api',router);
-
+app.use("/api", router);
 
 app.use((err, req, res, next) => {
   console.log(err);
@@ -67,4 +67,4 @@ app.use((err, req, res, next) => {
 
 const server = app.listen(PORT, () =>
   console.log(`Server started with ${PORT}`)
-)
+);
