@@ -2,6 +2,32 @@ const { bounty } = require("../Storageengine/initPrisma");
 const prisma = require("../Storageengine/initPrisma")
 const {HttpError, ValidationError} = require("../Util/error");
 class bountyController {
+	static async getmybounty(req, res, next) {
+		try {
+			bounties = await prisma.bounty.findMany({
+				where: {
+					Appovered: false,
+					sponsor: {
+						id: req.user.id
+					}
+				},
+				include:{
+					tree: true,
+
+					Claims: {
+						where: {
+							userId: req.user.id
+						},
+						select: {
+							userId: true
+						}
+					}
+				}
+			});
+		} catch (e) {
+			next(e);
+		}
+	}
 	static async getall(req, res, next) {
 		try {
 			let bounties;
@@ -48,8 +74,19 @@ class bountyController {
 				where: {
 					sponsor: {
 						id: req.user.id
+					},
+				},
+				include: {
+					tree: true,
+					Claims: {
+						where: {
+							userId: req.user.id
+						},
+						select: {
+							userId: true
+						}
 					}
-				  },
+				}
 			});
 			return res.json({data: bounties})
 		} catch (e) {
