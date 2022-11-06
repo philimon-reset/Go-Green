@@ -15,16 +15,25 @@ class bountyController {
 							}
 						}
 					},
-					include: {
-						tree: true
+					include:{
+						tree: true,
+
+						Claims: {
+							where: {
+								userId: req.user.id
+							},
+							select: {
+								userId: true
+							}
+						}
 					}
 				});
 			}
 			else {
 				bounties = await prisma.bounty.findMany({
 					include: {
-						tree: true
-					}
+						tree: true,
+					},
 				});
 			}
 			return res.json({data: bounties})
@@ -47,7 +56,7 @@ class bountyController {
 			next(e)
 		}
 	}
-	
+
 	static async getbyid(req, res, next) {
 		try {
 			const { bountyId } = req.params;
