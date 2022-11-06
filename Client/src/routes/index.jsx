@@ -36,8 +36,8 @@ const router = createBrowserRouter([
         element: <PlantPage />,
       },
       {
-        path: "StartPlanting",
-        element: <PlantPage />,
+        path: "plant/:id",
+        element: <StartPlanting />,
       },
     ],
   },

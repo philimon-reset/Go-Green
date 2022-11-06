@@ -1,0 +1,44 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    --primary: #00a028;
+}
+
+.planter-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.photo-submission-container{
+    display: flex;
+    flex-direction: column;
+    height: 15em;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 3em;
+}
+
+.photo{
+    display: flex;
+    gap: 2.5em;
+}
+
+.photo-btn{
+    background-color: var(--primary);
+    padding: 1em;
+    width: 13em;
+    border-radius: 4px;
+
+    font-size: large;
+    font-weight: 800;
+    color: white;
+}
+
+.submit{
+    font-weight: 800;
+    font-size: xx-large;
+    color: var(--primary);
+    margin-top: 2em;
+}
