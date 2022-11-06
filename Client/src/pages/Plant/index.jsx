@@ -2,6 +2,9 @@ import React from "react";
 import { Stack, Image, Box, Button, Flex, Text } from "@chakra-ui/react";
 import image from "../../assets/tree.jpg";
 
+import { Link } from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router-dom";
+
 export default function SimpleCookiePreference() {
   return (
     <Stack p="4" boxShadow="lg" m="2" borderRadius={5}>
@@ -31,9 +34,12 @@ export default function SimpleCookiePreference() {
           </Flex>
         </Flex>
         <Flex flexDirection={"column"} rowGap={3}>
-          <Button colorScheme="green" size={{ base: "sm", md: "lg" }}>
-            <Text>Start Planting !</Text>
-          </Button>
+          <Link as={RouterLink} to={`/plant/${3}`}>
+            <Button colorScheme="green" size={{ base: "sm", md: "lg" }}>
+              <Text>Start Planting !</Text>
+            </Button>
+          </Link>
+
           <Button colorScheme="gray" size={{ base: "sm", md: "lg" }}>
             <Text>Resources</Text>
           </Button>
