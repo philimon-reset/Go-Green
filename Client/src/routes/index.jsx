@@ -8,6 +8,7 @@ import Signup from "../pages/Signup";
 import SponsorPage from "../pages/Sponsor"
 import ContractsPage from "../pages/Contracts";
 import PlantPage from '../pages/Plant'
+import StartPlanting from "../pages/StartPlanting"
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: 'plant',
         element: <PlantPage />
+      },
+      {
+        path: 'plant/:id',
+        element: <StartPlanting />
       },
 
     ],
