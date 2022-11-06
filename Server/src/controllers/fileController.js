@@ -1,20 +1,3 @@
-var multer  = require('multer')
-// var upload = multer({ dest: '.../../../public' })
-const express = require("express");
-// const prisma = require("../Storageengine/initPrisma");
-const fileRouter = express.Router();
-
-var upload = multer({ dest: '../assets/uploads/' })
-
-
-fileRouter.post('/registration',upload.single('image'), (req, res) => {
-  console.log(req.file);
-  return res.json("done")
-});
-	// req.files is array of `photos` files
-	// req.body will contain the text fields, if there were any
-
-// bountyRouter.route('/').post(cityController.getall);
 
 // const storage = multer.diskStorage({
 //   destination: "./uploads/",
@@ -92,4 +75,4 @@ fileRouter.post('/registration',upload.single('image'), (req, res) => {
 // 	  }
 // 	});
 //       });
-module.exports = fileRouter;
+// module.exports = fileRouter;

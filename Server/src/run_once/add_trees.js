@@ -3,34 +3,44 @@ const axios = require('axios');
 const prisma = require("../Storageengine/initPrisma")
 
 
-const getTreeData = async () => {
+// const getProjectData = async () => {
+//     const instance = axios.create({
+//         baseURL: "https://tree-nation.com/api/projects?status=active",
+//         headers: {'Content-Type' : 'application/json'},
+//     });
+//     let result = await instance.get().then(result => result.data);
+//     return result;
+// }
+
+const getTreeData = async (id) => {
     const instance = axios.create({
-        baseURL: "https://tree-nation.com/api/projects?status=active",
+        baseURL: `https://tree-nation.com/api/species/${id}`,
         headers: {'Content-Type' : 'application/json'},
-
     });
-
     let result = await instance.get().then(result => result.data);
     return result;
 }
 
 const func = async () => {
-    let ans = await getTreeData();
-    for (let x in ans) {
+    // let ans = await getProjectData();
+    x = 1
+    while (x < 100) {
+        
         try {
+            let tree = await getTreeData(x)
 			await prisma.tree.create({
                 data: {
-                    name: ans[x].name,
-                    price: ans[x].species_price_from,
-                    pic: ans[x].url,
-                    description: ans[x].description.substring(0,100)
+                    name: tree.name,
+                    price: tree.price,
+                    pic: tree.image,
+                    description: tree.particularities.substring(0,100)
                 },
             })
             
 		} catch (e) {
-			console.log("errot while adding tree api data", e);
-            break;
+			console.log("specie with this id doesn't exist" + x);
 		}
+        x = x + 1;
 
      }
         
