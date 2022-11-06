@@ -1,6 +1,10 @@
 import "./style.css";
 
 const Sponsor = () => {
+
+  
+
+
   const showSuggestions = (e) => {
     
     console.log(e.target.value)
@@ -49,13 +53,12 @@ const Sponsor = () => {
         return data = 
         `
 
-        <li className="tree-result-container">
-          <img src="https://images.unsplash.com/photo-1502082553048-f009c37129b9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80" alt="Tree" className="tree-img" />
+        <li className="tree-result-container" data="${data}" index="${index}"} >
           <div className="tree-details">
-              <div className="tree-name">Girar</div>
-              <div className="tree-minimum-price">$10</div>
+              <div className="tree-name" index="${index}"><b>${data}</b></div>
+              <span>min price:  <div className="tree-minimum-price">$10</div></span>
           </div>
-          <div className="suggestion-items" index="${index}"> ${data} </div>
+          
         </li>
 
         `
@@ -66,7 +69,7 @@ const Sponsor = () => {
       console.log(emptyArray)
 
       if(!emptyArray.length){
-        emptyArray.push('<li className="search-item" new-string="' + inputData + '" >' + inputData + '</li>')
+        emptyArray.push('<li className="no-results" index="-1" > <div className="inner-no-result">No Results</div> </li>')
       }
 
 
@@ -77,8 +80,17 @@ const Sponsor = () => {
     }
 
     toggleSuggestions(emptyArray)
+    let allList = document.querySelectorAll('li')
+    for(let i = 0; i < allList.length; i++){
+      allList[i].setAttribute('onClick', 'select()')
+    }
   }
 
+  function select(){
+
+    console.log("hello")
+    
+  }
  
 
   const toggleSuggestions = (list) => {
@@ -94,15 +106,13 @@ const Sponsor = () => {
   
   }
 
-  const changeInputValue = (e) => {
-    
-  }
+
 
   return (
     <>
       <div className="section">
         <h1 className="title">Sponsor a Tree 🍃</h1>
-        <form class="form">
+        <form className="form">
 
           <div className="question">
             <label htmlFor="trees">

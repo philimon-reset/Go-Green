@@ -82,17 +82,24 @@ li{
     display: flex;
     
     transition: all 500ms cubic-bezier();
-    font-weight: bold;
+    border-bottom: 1px solid rgb(228, 228, 228) ;
     height: 3em;
     padding-left: 0.5rem;
     text-overflow: clip;
 }
 
+
 li:hover{
-    background-color: rgb(235, 235, 235);
+    background-color: rgb(196, 196, 196);
 }
 
+span{
+  display: flex;
+}
 
+span, .tree-minimum-price{
+  color: rgb(71, 71, 71);
+}
 
 
 /*  */
@@ -100,9 +107,20 @@ li:hover{
 /* Result Styling */
 img{
     height: 100%;
-    width: 20%;
+    width: 30%;
+    object-fit: cover;
+    padding: 0.3rem;
 }
 
+.no-results{
+  display: flex;
+  height: 100%;
+  width: 100%;
+  
+  display: grid;
+  place-items: center;
+
+}
 
 /*  */
 
