@@ -1,0 +1,74 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String
+  pic       String?
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  wallet    Int      @default(500)
+  PayPal    String?
+  Sponsor_B Bounty[] @relation("Sponsor")
+  Planter_B Bounty[] @relation("Planter")
+  Claims    Claims[]
+}
+
+model Bounty {
+  id           Int      @id @default(autoincrement())
+  sponsor      User     @relation("Sponsor", fields: [sponsorId], references: [id], onDelete: Cascade)
+  sponsorId    Int
+  tree         Tree     @relation(fields: [treeId], references: [id], onDelete: Cascade)
+  treeId       Int
+  planter      User?    @relation("Planter", fields: [planterId], references: [id])
+  planterId    Int?
+  Appovered    Boolean  @default(false)
+  Claims       Claims[]
+  City         City?    @relation(fields: [city_id], references: [id])
+  city_id      Int?
+  location_end String?
+  Success      Boolean  @default(false)
+  Report       Boolean  @default(false)
+  Before_pic   String?
+  After_pic    String?
+  Price        Float
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Tree {
+  id          Int      @id @default(autoincrement())
+  name        String
+  price       Float
+  pic         String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  description String
+  bounty      Bounty[]
+}
+
+model City {
+  id      Int      @id @default(autoincrement())
+  name    String
+  Country String   @default("Germany")
+  Bounty  Bounty[]
+}
+
+model Claims {
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  User      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    Int
+  Bounty    Bounty   @relation(fields: [bountyId], references: [id], onDelete: Cascade)
+  bountyId  Int
+
+  @@id([userId, bountyId])
+}
