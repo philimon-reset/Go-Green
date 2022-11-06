@@ -1,6 +1,7 @@
 const passport = require('passport');
 const Strategy = require('passport-local');
 const prisma = require('../Storageengine/initPrisma');
+const { HttpError } = require('./error');
 const {hashedpassword, unhashpassword} = require("./hashpassword")
 
 // serialize user
@@ -81,7 +82,7 @@ passport.use(
             email,
           },
         });
-
+        console.log("here")
         if (user == null) {
           return done(null, false, {
             message: 'Not found',
@@ -93,6 +94,7 @@ passport.use(
         if (validPass) {
           return done(null, user.id);
         }
+        throw new HttpError(401, "Password hash failed");
       } catch (error) {
         done(error, false, {
           message: 'An error occured',
