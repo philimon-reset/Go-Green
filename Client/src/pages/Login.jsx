@@ -13,9 +13,26 @@ import {
   Link,
 } from "@chakra-ui/react";
 
-import { Link as ReactLink } from "react-router-dom";
+import { Link as ReactLink, Navigate } from "react-router-dom";
+import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import server from "../service/server";
 
 export default function Login() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const mutation = useMutation({
+    mutationFn: async (vars) => {
+      const { data } = await server.post("/users/login", vars);
+      return data;
+    },
+  });
+
+  if (mutation.isSuccess) {
+    return <Navigate to="/" />;
+  }
+
   return (
     <Flex
       align={"center"}
@@ -43,11 +60,19 @@ export default function Login() {
           <Stack spacing={4}>
             <FormControl id="email">
               <FormLabel>Email address</FormLabel>
-              <Input type="email" />
+              <Input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </FormControl>
             <FormControl id="password">
               <FormLabel>Password</FormLabel>
-              <Input type="password" />
+              <Input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </FormControl>
             <Stack spacing={10} py={2}>
               <Button
@@ -55,6 +80,13 @@ export default function Login() {
                 color={"white"}
                 _hover={{
                   bg: "green.500",
+                }}
+                type="submit"
+                onClick={() => {
+                  mutation.mutate({
+                    email,
+                    password,
+                  });
                 }}
               >
                 Log In

@@ -1,6 +1,13 @@
+import { Navigate, useOutletContext } from "react-router-dom";
 import "./style.css";
 
 const Sponsor = () => {
+  const { user } = useOutletContext();
+
+  if (!user) {
+    return <Navigate to="/auth/" />;
+  }
+
   const showSuggestions = (e) => {
     let suggestionBox = document.getElementById("suggestions");
     let inputBox = document.getElementById("tree-input");

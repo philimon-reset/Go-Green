@@ -24,25 +24,40 @@ import "./style.css";
 import Lottie from "lottie-react";
 import treeAniim from "../assets/tree_anim.json";
 import { useLocation } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+
+import server from "../service/server";
 
 export default function MainLayout() {
+  const { data, isLoading, isSuccess } = useQuery({
+    queryKey: ["me"],
+    queryFn: async () => {
+      const { data } = await server.get("/me");
+      return data;
+    },
+    retry: false,
+  });
+
   const { colorMode, toggleColorMode } = useColorMode();
 
   let location = useLocation();
 
   const isActive = (location, currentLocation) => {
-    console.log(location.pathname);
-    console.log(currentLocation);
     if (location.pathname == currentLocation) {
       return true;
     }
     return false;
   };
 
-  const user = {
-    name: "abebe",
-    wallet: 20,
-  };
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  let user = null;
+
+  if (isSuccess) {
+    user = data.data;
+  }
 
   return (
     <>
@@ -70,55 +85,61 @@ export default function MainLayout() {
                 {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
               </Button>
 
-              <Menu>
-                <MenuButton
-                  as={Button}
-                  rounded={"full"}
-                  variant={"link"}
-                  cursor={"pointer"}
-                  minW={0}
-                  _hover={{
-                    border: "1px",
-                    borderColor: "green.500",
-                  }}
-                >
-                  <Avatar
-                    size={"sm"}
-                    src={`https://avatars.dicebear.com/api/human/${user.name}.svg`}
-                  />
-                </MenuButton>
-                <MenuList alignItems={"center"}>
-                  <br />
-                  <Center>
+              {user ? (
+                <Menu>
+                  <MenuButton
+                    as={Button}
+                    rounded={"full"}
+                    variant={"link"}
+                    cursor={"pointer"}
+                    minW={0}
+                    _hover={{
+                      border: "1px",
+                      borderColor: "green.500",
+                    }}
+                  >
                     <Avatar
-                      size={"2xl"}
+                      size={"sm"}
                       src={`https://avatars.dicebear.com/api/human/${user.name}.svg`}
                     />
-                  </Center>
-                  <br />
-                  <Center color="black">
-                    <p>{user.name}</p>
-                  </Center>
-                  <br />
-                  <Flex justifyContent={"space-around"} color="black">
-                    <p>🌲 : 25</p>
-                    <p>💰: 150$</p>
-                    <p>⭐: 4.5</p>
-                  </Flex>
-                  <MenuDivider />
-                  <MenuItem>
-                    <Link to="#">Account Settings</Link>
-                  </MenuItem>
-                  <MenuItem>Logout</MenuItem>
-                </MenuList>
-              </Menu>
+                  </MenuButton>
+                  <MenuList alignItems={"center"}>
+                    <br />
+                    <Center>
+                      <Avatar
+                        size={"2xl"}
+                        src={`https://avatars.dicebear.com/api/human/${user.name}.svg`}
+                      />
+                    </Center>
+                    <br />
+                    <Center color="black">
+                      <p>{user.name}</p>
+                    </Center>
+                    <br />
+                    <Flex justifyContent={"space-around"} color="black">
+                      <p>🌲 : 25</p>
+                      <p>💰: 150$</p>
+                      <p>⭐: 4.5</p>
+                    </Flex>
+                    <MenuDivider />
+                    <MenuItem>
+                      <Link to="#">Account Settings</Link>
+                    </MenuItem>
+                    <MenuItem>Logout</MenuItem>
+                  </MenuList>
+                </Menu>
+              ) : (
+                <Link as={RouterLink} to="/auth">
+                  Login
+                </Link>
+              )}
             </Stack>
           </Flex>
         </Flex>
       </div>
 
       <Box px={1} pt={7} overflow="hidden" mb={"11vh"} mt={"5vh"} zIndex={-1}>
-        <Outlet />
+        <Outlet context={{ user }} />
       </Box>
 
       <div className="nav-container">

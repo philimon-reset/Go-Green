@@ -15,43 +15,43 @@ const userData = [
           Price: 2,
           tree: {
             connect: {
-              id: 34
-            }
+              id: 33,
+            },
           },
           City: {
             connect: {
-              id: 15
-            }
+              id: 15,
+            },
           },
         },
         {
           Price: 9,
           tree: {
             connect: {
-              id: 5
-            }
+              id: 5,
+            },
           },
           City: {
             connect: {
-              id: 3
-            }
+              id: 3,
+            },
           },
         },
         {
           Price: 4,
           tree: {
             connect: {
-              id: 23
-            }
+              id: 23,
+            },
           },
           City: {
             connect: {
-              id: 14
-            }
+              id: 14,
+            },
           },
-        }
-      ]
-    }
+        },
+      ],
+    },
   },
   {
     name: "Phili",
@@ -64,43 +64,43 @@ const userData = [
           Price: 7,
           tree: {
             connect: {
-              id: 17
-            }
+              id: 17,
+            },
           },
           City: {
             connect: {
-              id: 23
-            }
+              id: 23,
+            },
           },
         },
         {
           Price: 2,
           tree: {
             connect: {
-              id: 6
-            }
+              id: 6,
+            },
           },
           City: {
             connect: {
-              id: 8
-            }
+              id: 8,
+            },
           },
         },
         {
           Price: 5,
           tree: {
             connect: {
-              id: 23
-            }
+              id: 23,
+            },
           },
           City: {
             connect: {
-              id: 45
-            }
+              id: 45,
+            },
           },
-        }
-      ]
-    }
+        },
+      ],
+    },
   },
   {
     name: "Abel",
@@ -112,52 +112,52 @@ const userData = [
           Price: 10,
           tree: {
             connect: {
-              id: 10
-            }
+              id: 10,
+            },
           },
           City: {
             connect: {
-              id: 10
-            }
+              id: 10,
+            },
           },
         },
         {
           Price: 7,
           tree: {
             connect: {
-              id: 5
-            }
+              id: 5,
+            },
           },
           City: {
             connect: {
-              id: 3
-            }
+              id: 3,
+            },
           },
         },
         {
           Price: 6,
           tree: {
             connect: {
-              id: 8
-            }
+              id: 8,
+            },
           },
           City: {
             connect: {
-              id: 12
-            }
+              id: 12,
+            },
           },
-        }
-      ]
-    }
-  }
-]
+        },
+      ],
+    },
+  },
+];
 
 async function main() {
   // await prisma.user.deleteMany();
   console.log(`Start seeding ...`);
   for (const u of userData) {
     const user = await prisma.user.create({
-      data: u
+      data: u,
     });
     console.log(`Created user with id: ${user.id}`);
   }

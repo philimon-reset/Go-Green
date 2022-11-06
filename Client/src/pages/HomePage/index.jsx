@@ -3,34 +3,42 @@ import { useState } from "react";
 
 import Card from "./Card.jsx";
 import ClaimModal from "./ClaimModal.jsx";
-import image from "../../assets/tree.jpg";
+
+import server from "../../service/server";
+import { useQuery } from "@tanstack/react-query";
 
 export default function HomePage() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [selectedBounty, setSelectedBounty] = useState(null);
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["bounties"],
+    queryFn: async () => {
+      const { data } = await server.get("/bounty");
+      return data;
+    },
+  });
 
   function openModal(index) {
     onOpen();
     setSelectedBounty(index);
   }
 
-  const BountyInfo = {
-    treeName: "Acacia",
-    price: "$57",
-    location: "Bremen, Germany",
-    title: "Plant a tree",
-    description: `Lorem ipsum dolor, sit amet consectetur adipisicing elit. Placeat at officiis perspiciatis esse 
-      velit deserunt saepe provident beatae excepturi est fugit eaque fuga nihil, sapiente 
-      laborum repudiandae. Error, at. Autem!`,
-    image,
-  };
-
-  const cards = [];
-  for (let i = 0; i < 25; i++) {
-    cards.push(
-      <Card key={i} BountyInfo={BountyInfo} openModal={() => openModal(i)} />
-    );
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
+
+  // const BountyInfo = {
+  //   treeName: "Acacia",
+  //   price: "$57",
+  //   location: "Bremen, Germany",
+  //   title: "Plant a tree",
+  //   description: `Lorem ipsum dolor, sit amet consectetur adipisicing elit. Placeat at officiis perspiciatis esse
+  //     velit deserunt saepe provident beatae excepturi est fugit eaque fuga nihil, sapiente
+  //     laborum repudiandae. Error, at. Autem!`,
+  //   image,
+  //   claimed: false,
+  // };
 
   return (
     <>
@@ -41,7 +49,16 @@ export default function HomePage() {
         alignContent={"flex-start"}
         gap={"5px"}
       >
-        {cards}
+        {data.data.map((bounty) => {
+          return (
+            <Card
+              key={bounty.id}
+              BountyInfo={bounty}
+              openModal={() => openModal(bounty.id)}
+              claimBounty={(bool) => {}}
+            />
+          );
+        })}
       </Flex>
       <ClaimModal
         modalOpen={isOpen}
@@ -49,7 +66,7 @@ export default function HomePage() {
           onClose();
           setSelectedBounty(null);
         }}
-        BountyInfo={BountyInfo}
+        BountyInfo={data.data[selectedBounty]}
       />
     </>
   );
