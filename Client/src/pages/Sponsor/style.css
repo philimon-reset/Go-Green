@@ -52,20 +52,57 @@ select {
 #suggestions{
     display: flex;
     flex-direction: column;
-    background-color: white;
-    max-height: 0;
-    overflow: hidden;
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    overflow: scroll;
+    
+
 }
 
-#suggestions.open{
-    max-height: fit-content;
+.tree-result-container{
+    display: flex;
+    flex-direction: row;
 }
+
+
 
 .suggestion-items{
     height: 3em;
-    border-bottom: 1px solid rgb(236, 236, 236);
-    background-color: white;
+    opacity: 0;
+    pointer-events: none;
 }
+
+#suggestions.open .suggestion-items{
+    opacity: 1;
+    pointer-events: all;
+}
+
+li{
+    list-style-type: none;
+    display: flex;
+    
+    transition: all 500ms cubic-bezier();
+    font-weight: bold;
+    height: 3em;
+    padding-left: 0.5rem;
+    text-overflow: clip;
+}
+
+li:hover{
+    background-color: rgb(235, 235, 235);
+}
+
+
+
+
+/*  */
+
+/* Result Styling */
+img{
+    height: 100%;
+    width: 20%;
+}
+
 
 /*  */
 
