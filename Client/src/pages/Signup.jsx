@@ -18,24 +18,44 @@ import {
   Select,
 } from "@chakra-ui/react";
 
-import { Link as ReactLink } from "react-router-dom";
+import { Link as ReactLink, Navigate } from "react-router-dom";
 import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
+import server from "../service/server";
+import { useQuery, useMutation } from "@tanstack/react-query";
+
 export default function Signup() {
+  // react query
   const [showPassword, setShowPassword] = useState(false);
 
-  let _cities = [
-    "Bremen",
-    "Munich",
-    "Dusseldorf",
-    "Frankfurt",
-    "Berlin",
-    "Munster",
-  ];
-  let cities = [];
-  for (let i = 0; i < _cities.length; i++) {
-    cities.push(<option value={i}>{_cities[i]}</option>);
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [city, setCity] = useState("");
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["cities"],
+    queryFn: async () => {
+      const { data } = await server.get("/city");
+      return data;
+    },
+  });
+
+  const mutation = useMutation({
+    mutationFn: async (vars) => {
+      console.log(vars);
+      const { data } = await server.post("/users/register", vars);
+      return data;
+    },
+  });
+
+  if (mutation.isSuccess) {
+    return <Navigate to="/" />;
+  }
+
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
 
   return (
@@ -67,24 +87,48 @@ export default function Signup() {
               <Box>
                 <FormControl id="ame" isRequired>
                   <FormLabel>Name</FormLabel>
-                  <Input type="text" />
+                  <Input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
                 </FormControl>
               </Box>
               <Box>
                 <FormControl id="location" isRequired>
                   <FormLabel>City</FormLabel>
-                  <Select placeholder="Select your city">{cities}</Select>
+                  <Select
+                    placeholder="Select your city"
+                    value={city}
+                    onChange={(e) => setCity(e.target.value)}
+                  >
+                    {data.data.map((city) => {
+                      return (
+                        <option value={city.id} key={city.id}>
+                          {city.name}
+                        </option>
+                      );
+                    })}
+                  </Select>
                 </FormControl>
               </Box>
             </HStack>
             <FormControl id="email" isRequired>
               <FormLabel>Email address</FormLabel>
-              <Input type="email" />
+              <Input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </FormControl>
             <FormControl id="password" isRequired>
               <FormLabel>Password</FormLabel>
               <InputGroup>
-                <Input type={showPassword ? "text" : "password"} />
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
                 <InputRightElement h={"full"}>
                   <Button
                     variant={"ghost"}
@@ -105,6 +149,15 @@ export default function Signup() {
                 color={"white"}
                 _hover={{
                   bg: "green.500",
+                }}
+                type="submit"
+                onClick={() => {
+                  mutation.mutate({
+                    email,
+                    name,
+                    password,
+                    location,
+                  });
                 }}
               >
                 Sign up

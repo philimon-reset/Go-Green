@@ -9,7 +9,34 @@ import {
   Button,
 } from "@chakra-ui/react";
 
-export default function Card({ BountyInfo, openModal }) {
+import { useMutation } from "@tanstack/react-query";
+import server from "../../service/server";
+
+export default function Card({ BountyInfo, openModal, claimBounty }) {
+  const ClaimMutation = useMutation({
+    mutationFn: async () => {
+      const { data } = await server.post(`/bounty/claim/${BountyInfo.id}`);
+      return data;
+    },
+  });
+
+  const RemoveClaimMutaion = useMutation({
+    mutationFn: async () => {
+      const { data } = await server.delete(`/bounty/claim/${BountyInfo.id}`);
+      return data;
+    },
+  });
+
+  if (ClaimMutation.isSuccess) {
+    claimBounty(true);
+    // notification
+  }
+
+  if (RemoveClaimMutaion.isSuccess) {
+    claimBounty(false);
+    // notification
+  }
+
   return (
     <Center py={{ base: 1, sm: 4 }}>
       <Box
@@ -31,7 +58,7 @@ export default function Card({ BountyInfo, openModal }) {
           height={{ base: 100, sm: 200 }}
           width={"100%"}
           objectFit={"cover"}
-          src={BountyInfo.image}
+          src={BountyInfo.tree.pic}
           style={{
             clipPath: "polygon(0 0,100% 0, 100% 85%, 0 100%)",
           }}
@@ -39,14 +66,15 @@ export default function Card({ BountyInfo, openModal }) {
 
         <Stack p={3}>
           <Text color={"gray.500"} fontSize={"sm"} textTransform={"uppercase"}>
-            {BountyInfo.location}
+            {/* {BountyInfo.location} */}
+            Bremen, Germany
           </Text>
           <Heading
             fontSize={{ base: "xl", sm: "2xl" }}
             fontFamily={"body"}
             fontWeight={500}
           >
-            {BountyInfo.treeName}
+            {BountyInfo.tree.name}
           </Heading>
           <Stack
             direction={"row"}
@@ -54,17 +82,39 @@ export default function Card({ BountyInfo, openModal }) {
             justifyContent={"space-between"}
           >
             <Text fontWeight={600} fontSize={"xl"} color={"green.500"}>
-              {BountyInfo.price}
+              {`$` + BountyInfo.Price}
             </Text>
-            <Button
-              bg={"green.700"}
-              color={"white"}
-              _hover={{
-                bg: "green.500",
-              }}
-            >
-              Claim
-            </Button>
+            {!BountyInfo.claimed ? (
+              <Button
+                bg={"green.700"}
+                color={"white"}
+                size={"sm"}
+                _hover={{
+                  bg: "green.500",
+                }}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  ClaimMutation.mutate();
+                }}
+              >
+                <Text fontSize={"12px"}>Claim</Text>
+              </Button>
+            ) : (
+              <Button
+                bg={"red.400"}
+                color={"white"}
+                size={"sm"}
+                _hover={{
+                  bg: "red.200",
+                }}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  RemoveClaimMutaion.mutate();
+                }}
+              >
+                <Text fontSize={"12px"}>Remove Claim</Text>
+              </Button>
+            )}
           </Stack>
         </Stack>
       </Box>
