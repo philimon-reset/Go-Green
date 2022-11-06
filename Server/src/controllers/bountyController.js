@@ -89,7 +89,7 @@ class bountyController {
 	}
 	static async approveBounty(req, res, next) {
 		try {
-			const { bountyId } = req.params;
+			const { bountyId, Success } = req.body;
 			const bounty = await prisma.bounty.findUnique({
 				where: {
 					id: Number(bountyId)
@@ -101,11 +101,12 @@ class bountyController {
 						id: Number(bountyId)
 					},
 					data: {
-						Success: true,
+						Success,
 					},
 				});
+				const message = Success ? "approved successfully" : "Reported";
 				return res.status(200).json({
-					"message" : "approved successfully"
+					message
 				});
 			}
 			else{

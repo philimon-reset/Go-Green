@@ -35,11 +35,10 @@ model Bounty {
   City         City?    @relation(fields: [city_id], references: [id])
   city_id      Int?
   location_end String?
-  Success      Boolean  @default(false)
-  Report       Boolean  @default(false)
+  Success      Boolean?
   Before_pic   String?
   After_pic    String?
-  Price        Float
+  Price        Decimal
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
@@ -47,7 +46,7 @@ model Bounty {
 model Tree {
   id          Int      @id @default(autoincrement())
   name        String
-  price       Float
+  price       Decimal
   pic         String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

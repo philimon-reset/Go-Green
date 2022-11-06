@@ -7,7 +7,7 @@ bountyRouter.route('/:bountyId').get(bountyController.getbyid).delete(checkauthe
 bountyRouter.route('/').get(bountyController.getall).post(checkauthenticated, bountyController.createBounty);
 bountyRouter.use(checkauthenticated);
 bountyRouter.route("/user_id/").get(bountyController.getByUserId)
-bountyRouter.route('/approveBounty/:bountyId').patch(bountyController.approveBounty);
+bountyRouter.route('/approveBounty/').patch(bountyController.approveBounty);
 bountyRouter.route('/approveClaim/').patch(bountyController.approveClaim);
 bountyRouter.route('/claim/:bountyId').post(checkOwnerClaim, bountyController.addClaim).delete(checkOwnerClaim, bountyController.removeClaim);
 
