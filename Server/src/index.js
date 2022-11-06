@@ -14,7 +14,7 @@ require("./Util/auth");
 const router = require("./routes/index");
 const app = express()
 
-
+app.use(express.static("../../Client/public"))
 app.use(express.json())
 app.use(morgan("dev"));
 app.use(express.urlencoded({extended: false}))

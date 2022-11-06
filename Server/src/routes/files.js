@@ -1,8 +1,7 @@
-const multer = require("multer");
-const path = require("path");
+var multer  = require('multer')
+// var upload = multer({ dest: '.../../../public' })
 const express = require("express");
-const prisma = require("../Storageengine/initPrisma");
-
+// const prisma = require("../Storageengine/initPrisma");
 const fileRouter = express.Router();
 
 const storage_before = multer.diskStorage({
